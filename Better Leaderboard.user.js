@@ -1,13 +1,10 @@
 // ==UserScript==
-// @name         Better Leaderboard
+// @name         Leaderboard Improvements
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  Add new features to the Leaderboard
-// @author       Brittle Dread
-// @match        https://*.undercards.net/leaderboard.jsp
-// @source       https://github.com/Liryax/Undercards-Better-Leaderboard/blob/master/Better%20Leaderboard.user.js
-// @updateURL    https://github.com/Liryax/Undercards-Better-Leaderboard/raw/master/Better%20Leaderboard.user.js
-// @downloadURL  https://github.com/Liryax/Undercards-Better-Leaderboard/raw/master/Better%20Leaderboard.user.js
+// @version      1.0.0
+// @description  try to take over the world!
+// @author       You
+// @match        https://undercards.net/leaderboard.jsp
 // @grant        none
 // ==/UserScript==
 
@@ -62,11 +59,56 @@ textElem = document.createTextNode("Sort By : ")
 
 document.getElementById("searchInput").parentElement.insertBefore(textElem,sortSelector)
 
+
+foTextElem = document.createElement("p")
+foTextElem.innerHTML = "Friend Only : "
+
+document.getElementById("searchInput").parentElement.insertBefore(foTextElem,textElem)
+
+friendOnly = document.createElement("input")
+friendOnly.type = "checkbox"
+friendOnly.hidden = true
+friendOnly.label = "Friend Only"
+friendOnly.addEventListener("change",function(){
+initLeaderboard()
+})
+
+foTextElem.appendChild(friendOnly)
+//document.getElementById("searchInput").parentElement.insertBefore(friendOnly,textElem)
+
+trueLeaderboard = leaderboard
+friendLeaderboard = leaderboard
+function setupLeaderboards(){
+    trueLeaderboard = leaderboard
+    friendLeaderboard = leaderboard
+    if(typeof selfUsername !== 'undefined'){
+        friendLeaderboard = leaderboard.filter(user => selfFriends.some(function(element){
+            return ((element.username == user.username) || (user.username == selfUsername))
+        }))
+        friendOnly.hidden = false
+    }
+}
+
+addJS_Node(setupLeaderboards);
+
+leaderboardSetup = false
+
 function customSort(){
 
     function winpercent(win,loss){
         if(win+loss < 50) return 0;
         return win/(win+loss)
+    }
+
+    if(!leaderboardSetup){
+        setupLeaderboards()
+        leaderboardSetup = true
+    }
+
+    if(friendOnly.checked){
+        leaderboard = friendLeaderboard
+    }else{
+        leaderboard = trueLeaderboard
     }
 
     if(window.sortSelector.value == "Elo Rating"){
@@ -110,3 +152,6 @@ function initLeaderboard() {
 }
 
 addJS_Node(initLeaderboard);
+
+console.log(window)
+console.log(window.leaderboard)

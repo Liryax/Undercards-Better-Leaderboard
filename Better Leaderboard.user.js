@@ -107,6 +107,3 @@ function initLeaderboard() {
 }
 
 addJS_Node(initLeaderboard);
-
-console.log(window)
-console.log(window.leaderboard)

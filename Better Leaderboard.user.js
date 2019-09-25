@@ -1,10 +1,13 @@
 // ==UserScript==
-// @name         Leaderboard Improvements
+// @name         Better Leaderboard
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
-// @author       You
-// @match        https://undercards.net/leaderboard.jsp
+// @description  Add new features to the Leaderboard
+// @author       Brittle Dread
+// @match        https://*.undercards.net/leaderboard.jsp
+// @source       https://github.com/Liryax/Undercards-Better-Leaderboard/blob/master/Better%20Leaderboard.user.js
+// @updateURL    https://github.com/Liryax/Undercards-Better-Leaderboard/raw/master/Better%20Leaderboard.user.js
+// @downloadURL  https://github.com/Liryax/Undercards-Better-Leaderboard/raw/master/Better%20Leaderboard.user.js
 // @grant        none
 // ==/UserScript==
 
